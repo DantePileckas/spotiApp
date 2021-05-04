@@ -6,20 +6,24 @@ import { SpotifyService } from 'src/app/services/spotify.service';
 @Component({
   selector: 'app-artista',
   templateUrl: './artista.component.html',
-  styles: [
-  ]
+  styles:[]
 })
 export class ArtistaComponent {
 
 artista: any={};
+topTracks:any[]=[];
+
+
 loadingArtist: boolean;
 
   constructor(private router:ActivatedRoute,
               private spotify:SpotifyService) { 
-    this.router.params.subscribe(params =>{ 
-      // console.log(params['id']);
+      
       this.loadingArtist=true;
+      this.router.params.subscribe(params =>{ 
+      // console.log(params['id']);
       this.getArtista(params['id']);
+      this.getTopTracks(params['id']);
     })
   }
 
@@ -33,4 +37,13 @@ loadingArtist: boolean;
      })
   }
 
+  //Este método me permite llamar al servicio para obtener información
+  getTopTracks(id: string){
+    this.spotify.getTopTracks(id)
+        .subscribe(topTracks =>{
+          console.log(topTracks);
+          this.topTracks = topTracks;
+        });
+  }
 }
+

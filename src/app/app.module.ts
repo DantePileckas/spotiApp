@@ -15,7 +15,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 // pipes
 import { NoimagePipe } from './pipes/noimage.pipe';
 import { TarjetasComponent } from './components/tarjetas/tarjetas.component';
+
 import { LoadingComponent } from './components/shared/loading/loading.component';
+import { DomseguroPipe } from './pipes/domseguro.pipe';
 
 //services
 //import { SpotifyService } from './services/spotify.service';
@@ -28,6 +30,7 @@ import { LoadingComponent } from './components/shared/loading/loading.component'
     SearchComponent,
     NavbarComponent,
     NoimagePipe,
+    DomseguroPipe,
     TarjetasComponent,
     LoadingComponent
   ],
