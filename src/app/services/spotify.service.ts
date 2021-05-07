@@ -6,16 +6,22 @@ import {map} from 'rxjs/operators'; //Operador.
   providedIn: 'root'
 })
 export class SpotifyService {
+    private token: any;
 
   constructor(private http:HttpClient) {
-    console.log("SpotifyService listo")
+    this.getToken()
+    .subscribe(resp => {
+      this.token = resp;
+    });  
    }
    //para optimizar la información. Código exlusivamente único para NewReleases y Artists.
    getQuery(query:string){
      const url=`https://api.spotify.com/v1/${query}`;  //centralizar y unificar toda la petición
 
      const headers = new HttpHeaders({
-      'Authorization': 'Bearer BQD6lyAAd-ILi7I7TQpHAf_sj3BBScZLPGhYHdso8NXhug0hz_pn6IKBrvg3x0oKtoEzoPMZVTdf_dm1Lug'
+      'Authorization': `Bearer ${this.token.access_token}`
+      // 'Authorization': 'Bearer BQDpt-G-Vlpto7CkGmSmgrOL4gzQQhPTnoOAOEhpq_Zju06taUpQinBfJhhXyhqS1y3TCrABupU1ub8Cq2U'
+
       });
       
       return this.http.get(url, {headers});
@@ -44,6 +50,9 @@ export class SpotifyService {
     
     return this.getQuery(`artists/${id}/top-tracks?market=es`) 
     .pipe(map(data=>data['tracks']));
+  }
+  getToken(): any {
+    return this.http.get(`https://spotify-ar-api.herokuapp.com/spotify/49c58326fd8e4b62a56efd9732327ada/1ac83de3b84f4d828845bdda1743d561`);
   }
 }
 
